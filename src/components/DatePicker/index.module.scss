@@ -1,0 +1,161 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    min-width: 320px;
+    min-height: 450px;
+    background-color: var(--color-background);
+    box-shadow: 4px 4px 20px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 16px 0;
+    & > .header {
+        padding: 0 0 15px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        & > .title {
+            color: var(--color-common-white);
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 137.5%;
+        }
+        & > .subtitle {
+            color: var(--color-common-white);
+            text-align: center;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 150%;
+            margin-bottom: 4px;
+        }
+    }
+    & > .pagination {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 320px;
+        & > .button {
+            padding: 12px;
+            & > svg {
+                width: 24px;
+                height: 24px;
+                min-width: 24px;
+                color: var(--color-common-white);
+            }
+        }
+        & > .month {
+            color: var(--color-greyscale-white-100);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 150%;
+            text-align: center;
+        }
+    }
+    & > .datePicker {
+        padding: 8px 16px;
+        & > .header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            margin-bottom: 13px;
+            & > .day {
+                width: 36px;
+                color: var(--color-greyscale-500);
+                text-align: center;
+                font-size: 11px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 13px; /* 118.182% */
+            }
+        }
+        & > .body {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            & > .day {
+                width: 36px;
+                height: 36px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--color-common-white);
+                text-align: center;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 143%; /* 20.02px */
+                letter-spacing: 0.15px;
+                border-radius: 50%;
+                cursor: pointer;
+                &:hover {
+                    background-color: var(--color-common-white);
+                    color: var(--color-greyscale-darker);
+                }
+            }
+            & > .otherMonth {
+                opacity: 0.5;
+            }
+            & > .active {
+                background-color: var(--color-primary);
+            }
+            & > .today {
+                border: 1px solid var(--color-primary);
+            }
+        }
+    }
+
+    & > .yearPicker {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        row-gap: 24px;
+        column-gap: 9px;
+        padding: 18px 0 31px 0;
+
+        & > .year {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 61px;
+            height: 24px;
+            color: var(--color-common-white);
+            text-align: center;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 150%; /* 24px */
+            &:hover {
+                background-color: var(--color-common-white);
+                color: var(--color-greyscale-darker);
+            }
+        }
+
+        & > .active {
+            background-color: var(--color-primary);
+        }
+
+        & > .current {
+            border: 1px solid var(--color-primary);
+        }
+    }
+
+    & > .actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0 27px;
+        & > button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            color: var(--color-common-white);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 171.429% */
+
+            &:last-child {
+                margin-left: 38px;
+            }
+        }
+    }
+}
