@@ -30,29 +30,7 @@
             margin-bottom: 4px;
         }
     }
-    & > .pagination {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        min-width: 320px;
-        & > .button {
-            padding: 12px;
-            & > svg {
-                width: 24px;
-                height: 24px;
-                min-width: 24px;
-                color: var(--color-common-white);
-            }
-        }
-        & > .month {
-            color: var(--color-greyscale-white-100);
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 150%;
-            text-align: center;
-        }
-    }
+
     & > .datePicker {
         padding: 8px 16px;
         & > .header {
@@ -87,12 +65,17 @@
                 letter-spacing: 0.15px;
                 border-radius: 50%;
                 cursor: pointer;
+                transition:
+                    background-color 0.2s ease-in-out,
+                    color 0.2s ease-in-out;
+
                 &:hover {
                     background-color: var(--color-common-white);
                     color: var(--color-greyscale-darker);
                 }
             }
-            & > .otherMonth {
+            & > .otherMonth,
+            .disabled {
                 opacity: 0.5;
             }
             & > .active {
@@ -123,6 +106,9 @@
             font-style: normal;
             font-weight: 400;
             line-height: 150%; /* 24px */
+            transition:
+                background-color 0.2s ease-in-out,
+                color 0.2s ease-in-out;
             &:hover {
                 background-color: var(--color-common-white);
                 color: var(--color-greyscale-darker);
@@ -136,26 +122,13 @@
         & > .current {
             border: 1px solid var(--color-primary);
         }
+        & > .disabled {
+            opacity: 0.5;
+        }
     }
-
-    & > .actions {
-        display: flex;
-        justify-content: flex-end;
-        padding: 0 27px;
-        & > button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 16px;
-            color: var(--color-common-white);
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 24px; /* 171.429% */
-
-            &:last-child {
-                margin-left: 38px;
-            }
+    & > .buttonGroup {
+        & button:last-child {
+            margin-left: 38px;
         }
     }
 }

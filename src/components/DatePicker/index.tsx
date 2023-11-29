@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { useMemo, useState } from 'react';
 import styles from './index.module.scss';
-import ArrowPrev from '@/assets/keyboard-arrow-left.svg';
-import ArrowNext from '@/assets/keyboard-arrow-right.svg';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
-
-enum CALENDAR_MODE {
-    DATE = 'date',
-    YEAR = 'year',
-}
+import Paginator from '@/components/Paginator';
+import { CALENDAR_MODE, WEEK_DAYS } from '@/constants/date';
+import { ButtonGroup } from '@/components/Button';
+import { isDateOutOfRange } from '@/utils/date';
 
 function DatePicker() {
     const [mode, setMode] = useState(CALENDAR_MODE.DATE);
@@ -116,32 +113,47 @@ function DatePicker() {
     }, [selectedDate]);
 
     const handleSelectDate = (date: Date) => {
+        if (isDateOutOfRange(date)) {
+            return;
+        }
         setSelectedDate(date);
     };
 
-    const handleChangeMonthPage = (action: 'prev' | 'next') => () => {
-        if (action === 'prev') {
-            setSelectedDate((prev) => dayjs(prev).add(-1, 'month').toDate());
-        } else {
-            setSelectedDate((prev) => dayjs(prev).add(1, 'month').toDate());
-        }
-    };
-
-    const handleChangeYearPage = (action: 'prev' | 'next') => () => {
-        if (action === 'prev') {
-            setSelectedDate((prev) => dayjs(prev).add(-20, 'year').toDate());
-        } else {
-            setSelectedDate((prev) => dayjs(prev).add(20, 'year').toDate());
-        }
+    const handleChangeBatchDates = (amount: dayjs.Dayjs) => () => {
+        handleSelectDate(amount.toDate());
     };
 
     const handleSelectYear = (year: number) => {
         const diff = year - dayjs(selectedDate).year();
-        setSelectedDate((prev) => dayjs(prev).add(diff, 'year').toDate());
+        handleSelectDate(dayjs(selectedDate).add(diff, 'year').toDate());
     };
 
-    const handleChangeMode = (mode: CALENDAR_MODE) => {
-        setMode(mode);
+    const prevMonthPage = dayjs(selectedDate).add(-1, 'month');
+    const nextMonthPage = dayjs(selectedDate).add(1, 'month');
+    const prevYearPage = dayjs(selectedDate).add(-20, 'year');
+    const nextYearPage = dayjs(selectedDate).add(20, 'year');
+    const handlePrevPage =
+        mode === CALENDAR_MODE.DATE
+            ? handleChangeBatchDates(prevMonthPage)
+            : handleChangeBatchDates(prevYearPage);
+    const handleNextPage =
+        mode === CALENDAR_MODE.DATE
+            ? handleChangeBatchDates(nextMonthPage)
+            : handleChangeBatchDates(nextYearPage);
+    const isPrevDisabled =
+        mode === CALENDAR_MODE.DATE
+            ? isDateOutOfRange(prevMonthPage.toDate())
+            : isDateOutOfRange(prevYearPage.toDate());
+    const isNextDisabled =
+        mode === CALENDAR_MODE.DATE
+            ? isDateOutOfRange(nextMonthPage.toDate())
+            : isDateOutOfRange(nextYearPage.toDate());
+    const handleChangeMode = (mode: CALENDAR_MODE) => () => {
+        if (mode === CALENDAR_MODE.DATE) {
+            setMode(CALENDAR_MODE.YEAR);
+        } else {
+            setMode(CALENDAR_MODE.DATE);
+        }
     };
 
     return (
@@ -152,55 +164,30 @@ function DatePicker() {
                     {dateElems[1]}, {dateElems[3]}
                 </div>
             </div>
-            <div className={clsx([styles.pagination])}>
-                <button
-                    onClick={
-                        mode === CALENDAR_MODE.DATE
-                            ? handleChangeMonthPage('prev')
-                            : handleChangeYearPage('prev')
-                    }
-                    className={clsx([styles.button])}
-                >
-                    <ArrowPrev />
-                </button>
-                <button
-                    className={clsx([styles.month])}
-                    onClick={() => {
-                        if (mode === CALENDAR_MODE.DATE) {
-                            handleChangeMode(CALENDAR_MODE.YEAR);
-                        } else {
-                            handleChangeMode(CALENDAR_MODE.DATE);
-                        }
-                    }}
-                >
-                    {mode === CALENDAR_MODE.DATE && (
+            <Paginator
+                isPrevDisabled={isPrevDisabled}
+                isNextDisabled={isNextDisabled}
+                handleNextPage={handleNextPage}
+                handlePrevPage={handlePrevPage}
+                handleChangeMode={handleChangeMode(mode)}
+                content={
+                    mode === CALENDAR_MODE.DATE ? (
                         <span>
                             {dateElems[1]}, {dateElems[3]}
                         </span>
-                    )}
-                    {mode === CALENDAR_MODE.YEAR && <span>{dateElems[3]}</span>}
-                </button>
-                <button
-                    onClick={
-                        mode === CALENDAR_MODE.DATE
-                            ? handleChangeMonthPage('next')
-                            : handleChangeYearPage('next')
-                    }
-                    className={clsx([styles.button])}
-                >
-                    <ArrowNext />
-                </button>
-            </div>
+                    ) : (
+                        <span>{dateElems[3]}</span>
+                    )
+                }
+            />
             {mode === CALENDAR_MODE.DATE && (
                 <div className={clsx([styles.datePicker])}>
                     <div className={clsx([styles.header])}>
-                        {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(
-                            (day) => (
-                                <div key={day} className={clsx([styles.day])}>
-                                    {day}
-                                </div>
-                            )
-                        )}
+                        {WEEK_DAYS.map((day) => (
+                            <div key={day} className={clsx([styles.day])}>
+                                {day.slice(0, 2)}
+                            </div>
+                        ))}
                     </div>
                     <div className={clsx([styles.body])}>
                         {dates.map((day) => {
@@ -222,6 +209,8 @@ function DatePicker() {
                                     className={clsx([
                                         styles.day,
                                         !isCurrentMonth && styles.otherMonth,
+                                        isDateOutOfRange(day) &&
+                                            styles.disabled,
                                         isToday && styles.today,
                                         isActive && styles.active,
                                     ])}
@@ -248,6 +237,9 @@ function DatePicker() {
                                 className={clsx([
                                     styles.year,
                                     isActive && styles.active,
+                                    isDateOutOfRange(
+                                        new Date(`${year}-01-01`)
+                                    ) && styles.disabled,
                                     isCurrent && styles.current,
                                 ])}
                             >
@@ -258,22 +250,22 @@ function DatePicker() {
                 </div>
             )}
 
-            <div className={clsx([styles.actions])}>
-                <button
-                    onClick={() => {
-                        console.log('dismiss');
+            <ButtonGroup className={styles.buttonGroup}>
+                <ButtonGroup.Button
+                    handleClick={() => {
+                        console.log('DISMISS');
                     }}
                 >
                     Cancel
-                </button>
-                <button
-                    onClick={() => {
-                        console.log(selectedDate);
+                </ButtonGroup.Button>
+                <ButtonGroup.Button
+                    handleClick={() => {
+                        console.log('OK');
                     }}
                 >
                     OK
-                </button>
-            </div>
+                </ButtonGroup.Button>
+            </ButtonGroup>
         </div>
     );
 }
