@@ -67,28 +67,34 @@ const DatePicker: React.FC<DatePickerProps> = ({
                     handleConfirm(date.format('YYYY-MM-DD'))();
                 }}
             />
-            <Calendar
-                ref={calendarRef}
-                value={value ? dayjs(value).toDate() : new Date()}
-                className={clsx([styles.calendar, isFocus && styles.visible])}
-                range={range}
-                renderActions={(selectedDate: Date) => {
-                    return (
-                        <ButtonGroup className={styles.buttonGroup}>
-                            <ButtonGroup.Button handleClick={handleDismiss}>
-                                Cancel
-                            </ButtonGroup.Button>
-                            <ButtonGroup.Button
-                                handleClick={handleConfirm(
-                                    dayjs(selectedDate).format('YYYY-MM-DD')
-                                )}
-                            >
-                                OK
-                            </ButtonGroup.Button>
-                        </ButtonGroup>
-                    );
-                }}
-            />
+            {isFocus && (
+                <Calendar
+                    ref={calendarRef}
+                    value={value ? dayjs(value).toDate() : new Date()}
+                    className={clsx([
+                        styles.calendar,
+                        isFocus && styles.visible,
+                    ])}
+                    range={range}
+                    renderActions={(selectedDate: Date) => {
+                        return (
+                            <ButtonGroup>
+                                <ButtonGroup.Button handleClick={handleDismiss}>
+                                    Cancel
+                                </ButtonGroup.Button>
+                                <ButtonGroup.Button
+                                    style={{ marginLeft: 38 }}
+                                    handleClick={handleConfirm(
+                                        dayjs(selectedDate).format('YYYY-MM-DD')
+                                    )}
+                                >
+                                    OK
+                                </ButtonGroup.Button>
+                            </ButtonGroup>
+                        );
+                    }}
+                />
+            )}
         </div>
     );
 };

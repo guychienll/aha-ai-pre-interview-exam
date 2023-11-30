@@ -33,12 +33,11 @@
         letter-spacing: 0.15px;
         caret-color: var(--color-greyscale-white-100);
         color: var(--color-greyscale-white-100);
-        &.input[type="date"]::-webkit-inner-spin-button,
-        &.input[type="date"]::-webkit-calendar-picker-indicator {
+        &.input[type='date']::-webkit-inner-spin-button,
+        &.input[type='date']::-webkit-calendar-picker-indicator {
             display: none;
             -webkit-appearance: none;
         }
-
 
         &::placeholder {
             opacity: 0.3;
@@ -50,9 +49,8 @@
 
         &:active,
         &:focus,
-        &.focus{
+        &.focus {
             border-color: var(--color-primary);
         }
     }
 }
-

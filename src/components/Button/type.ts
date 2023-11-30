@@ -8,4 +8,5 @@ export type ButtonGroupProps = {
 export type ButtonProps = {
     handleClick: () => void;
     children: React.ReactNode;
+    style?: any;
 };

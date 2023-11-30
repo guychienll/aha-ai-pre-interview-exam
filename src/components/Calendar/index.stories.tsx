@@ -98,7 +98,7 @@ export const WithActions: Story = {
                 calendarMode={CALENDAR_MODE.DATE}
                 renderActions={() => {
                     return (
-                        <ButtonGroup className={styles.buttonGroup}>
+                        <ButtonGroup>
                             <ButtonGroup.Button
                                 handleClick={() => {
                                     console.log('dismiss');
