@@ -7,29 +7,38 @@ export type InputProps = {
     id: string;
     label: string;
     value: string;
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    type: 'password' | 'text';
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    type: 'password' | 'text' | 'date';
     placeholder: string;
+    onFocus?: () => void;
+    onBlur?: () => void;
     disabled?: boolean;
 };
 
-const Input: React.FC<InputProps> = ({
-    id,
-    label,
-    value,
-    placeholder,
-    onChange,
-    type,
-    disabled = false,
-}) => {
+export default React.forwardRef<HTMLDivElement, InputProps>(function Input(
+    {
+        id,
+        label,
+        value,
+        placeholder,
+        onChange,
+        onFocus,
+        onBlur,
+        type,
+        disabled = false,
+    },
+    ref
+) {
     return (
-        <div className={clsx([styles.wrapper])}>
+        <div ref={ref} className={clsx([styles.wrapper])}>
             <label htmlFor={id} className={clsx([styles.label])}>
                 {label}
             </label>
             <input
                 disabled={disabled}
                 onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 placeholder={placeholder}
                 value={value}
                 className={clsx([styles.input])}
@@ -38,6 +47,4 @@ const Input: React.FC<InputProps> = ({
             />
         </div>
     );
-};
-
-export default Input;
+});
