@@ -13,6 +13,9 @@
 }
 
 .buttonGroup {
+    justify-content: flex-end;
+    padding: 0 27px;
+
     & > button:last-child {
         margin-left: 38px;
     }

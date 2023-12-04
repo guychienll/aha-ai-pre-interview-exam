@@ -9,6 +9,11 @@ export type ButtonProps = {
 
 const Button: React.FC<ButtonProps> = (props) => {
     const { handleClick, children } = props;
+
+    if (!children) {
+        return null;
+    }
+
     return (
         <button className={clsx([styles.button])} onClick={handleClick}>
             {children}

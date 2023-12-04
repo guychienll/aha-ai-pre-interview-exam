@@ -37,6 +37,7 @@ export const Default: Story = {};
 
 /**
  * PasswordInput Input ( LEAST_ONE_UPPER_CASE_CHAR_REQUIRED )
+ * <br/>
  * at least 1 uppercase letter , would be pass
  */
 export const UpperCasePass: Story = {
@@ -55,6 +56,7 @@ export const UpperCasePass: Story = {
 
 /**
  * PasswordInput Input ( LEAST_ONE_LOWER_CASE_CHAR_REQUIRED )
+ * <br/>
  * at least 1 lowercase letter , would be pass
  */
 export const LowerCasePass: Story = {
@@ -73,6 +75,7 @@ export const LowerCasePass: Story = {
 
 /**
  * PasswordInput Input ( LEAST_ONE_NUMBER_CHAR_REQUIRED )
+ * <br/>
  * at least 1 number letter , would be pass
  */
 export const NumberPass: Story = {
@@ -91,6 +94,7 @@ export const NumberPass: Story = {
 
 /**
  * PasswordInput Input ( LEAST_ONE_SPECIAL_CHAR_REQUIRED )
+ * <br/>
  * at least 1 special char like !@#$, would be pass
  */
 export const SpecialCharPass: Story = {
@@ -109,6 +113,7 @@ export const SpecialCharPass: Story = {
 
 /**
  * PasswordInput Input ( MinLengthPass )
+ * <br/>
  * at least > 8 char, would be pass
  */
 export const MinLengthPass: Story = {
@@ -127,6 +132,7 @@ export const MinLengthPass: Story = {
 
 /**
  * PasswordInput Input ( AllPass )
+ * <br/>
  * satisfy all rules, would be pass
  */
 export const AllPass: Story = {
