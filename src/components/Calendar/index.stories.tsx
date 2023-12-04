@@ -3,9 +3,8 @@ import Calendar from './';
 import React from 'react';
 import dayjs from 'dayjs';
 import { CALENDAR_MODE } from '@/constants/date';
-import { ButtonGroup } from '@/components/Button';
-import styles from '@/components/DatePicker/index.module.scss';
 import { DefaultDateRange } from '@/utils/date';
+import ButtonGroup from '@/components/ButtonGroup';
 
 const meta: Meta<typeof Calendar> = {
     title: 'components/Calendar',

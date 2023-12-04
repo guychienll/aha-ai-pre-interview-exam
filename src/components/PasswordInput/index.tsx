@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import Input, { InputProps } from '@/components/Input';
-import CheckList from '@/components/CheckList';
 import ajv, { Schema, VALIDATE_ERROR } from '@/singletons/ajv';
+import CheckList from '@/components/CheckList';
 
 const order = [
     VALIDATE_ERROR.LEAST_ONE_UPPER_CASE_CHAR_REQUIRED,
@@ -105,7 +105,7 @@ Password.CheckList = function PasswordCheckList() {
             });
     }, [password]);
 
-    return <CheckList items={items} />;
+    return <CheckList items={items}></CheckList>;
 };
 
 export default Password;

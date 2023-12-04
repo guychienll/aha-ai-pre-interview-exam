@@ -1,0 +1,20 @@
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    color: var(--color-common-white);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 171.429% */
+    border-radius: 3px;
+    transition:
+        background-color 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: var(--color-common-white);
+        color: var(--color-greyscale-darker);
+    }
+}

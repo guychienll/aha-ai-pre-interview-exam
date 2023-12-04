@@ -1,7 +1,12 @@
 import * as React from 'react';
-import { ButtonProps } from '@/components/Button/type';
 import clsx from 'clsx';
-import styles from './index.module.scss';
+import styles from '@/components/Button/Button.module.scss';
+
+export type ButtonProps = {
+    handleClick: () => void;
+    children: React.ReactNode;
+    style?: any;
+};
 
 const Button: React.FC<ButtonProps> = (props) => {
     const { handleClick, children, style = {} } = props;

@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import PasswordInput from '@/components/PasswordInput';
 import Password from '@/components/PasswordInput';
 import DatePicker from '@/components/DatePicker';
+import CheckItem from '@/components/CheckItem';
 
 export default function Home() {
     const [date, setDate] = React.useState<string>('');
@@ -27,7 +28,6 @@ export default function Home() {
                     setDate(date);
                 }}
             />
-            ;
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
-import Calendar, { DatePickerProps } from './';
-import DatePicker from './';
-import React, { useState } from 'react';
+import Calendar from './';
+import DatePicker, { DatePickerProps } from './';
+import React from 'react';
 import { useArgs } from '@storybook/preview-api';
 import { DefaultDateRange } from '@/utils/date';
 

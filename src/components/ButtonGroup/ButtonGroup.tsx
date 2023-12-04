@@ -1,9 +1,12 @@
 import React from 'react';
-import { ButtonGroupProps, ButtonProps } from '@/components/Button/type';
 import clsx from 'clsx';
-import styles from './index.module.scss';
+import styles from '@/components/ButtonGroup/ButtonGroup.module.scss';
+import Button, { ButtonProps } from '@/components/Button';
 
-import Button from '@/components/Button/Button';
+export type ButtonGroupProps = {
+    className?: string;
+    children: React.ReactNode;
+};
 
 const ButtonGroup: React.FC<ButtonGroupProps> & {
     Button: React.FC<ButtonProps>;
