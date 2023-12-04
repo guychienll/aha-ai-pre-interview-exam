@@ -11,3 +11,9 @@
         }
     }
 }
+
+.buttonGroup {
+    & > button:last-child {
+        margin-left: 38px;
+    }
+}

@@ -78,12 +78,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
                     range={range}
                     renderActions={(selectedDate: Date) => {
                         return (
-                            <ButtonGroup>
+                            <ButtonGroup className={styles.buttonGroup}>
                                 <ButtonGroup.Button handleClick={handleDismiss}>
                                     Cancel
                                 </ButtonGroup.Button>
                                 <ButtonGroup.Button
-                                    style={{ marginLeft: 38 }}
                                     handleClick={handleConfirm(
                                         dayjs(selectedDate).format('YYYY-MM-DD')
                                     )}
