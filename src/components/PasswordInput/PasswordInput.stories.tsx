@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { StoryObj, Meta } from '@storybook/react';
-import Password from './';
+import PasswordInput from './';
 
-const meta: Meta<typeof Password> = {
-    title: 'components/Password',
-    component: Password,
+const meta: Meta<typeof PasswordInput> = {
+    title: 'components/PasswordInput',
+    component: PasswordInput,
     tags: ['autodocs'],
     argTypes: {
         children: {
@@ -17,15 +17,15 @@ const meta: Meta<typeof Password> = {
         children: null,
     },
     render: (args) => (
-        <Password {...args} passwordInitValue="">
-            <Password.Input
+        <PasswordInput {...args} passwordInitValue="">
+            <PasswordInput.Input
                 id="aha-password-input-default"
                 label="Password"
                 placeholder="Password"
             />
             <div className="py-2" />
-            <Password.CheckList />
-        </Password>
+            <PasswordInput.CheckList />
+        </PasswordInput>
     ),
 };
 
@@ -36,109 +36,109 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 /**
- * Password Input ( LEAST_ONE_UPPER_CASE_CHAR_REQUIRED )
+ * PasswordInput Input ( LEAST_ONE_UPPER_CASE_CHAR_REQUIRED )
  * at least 1 uppercase letter , would be pass
  */
 export const UpperCasePass: Story = {
     render: (args) => (
-        <Password {...args} passwordInitValue="UPPER">
-            <Password.Input
+        <PasswordInput {...args} passwordInitValue="UPPER">
+            <PasswordInput.Input
                 id="aha-password-input-upper"
                 label="Password"
                 placeholder="Password"
             />
             <div className="py-2" />
-            <Password.CheckList />
-        </Password>
+            <PasswordInput.CheckList />
+        </PasswordInput>
     ),
 };
 
 /**
- * Password Input ( LEAST_ONE_LOWER_CASE_CHAR_REQUIRED )
+ * PasswordInput Input ( LEAST_ONE_LOWER_CASE_CHAR_REQUIRED )
  * at least 1 lowercase letter , would be pass
  */
 export const LowerCasePass: Story = {
     render: (args) => (
-        <Password {...args} passwordInitValue="lower">
-            <Password.Input
+        <PasswordInput {...args} passwordInitValue="lower">
+            <PasswordInput.Input
                 id="aha-password-input-lower"
                 label="Password"
                 placeholder="Password"
             />
             <div className="py-2" />
-            <Password.CheckList />
-        </Password>
+            <PasswordInput.CheckList />
+        </PasswordInput>
     ),
 };
 
 /**
- * Password Input ( LEAST_ONE_NUMBER_CHAR_REQUIRED )
+ * PasswordInput Input ( LEAST_ONE_NUMBER_CHAR_REQUIRED )
  * at least 1 number letter , would be pass
  */
 export const NumberPass: Story = {
     render: (args) => (
-        <Password {...args} passwordInitValue="123">
-            <Password.Input
+        <PasswordInput {...args} passwordInitValue="123">
+            <PasswordInput.Input
                 id="aha-password-input-number"
                 label="Password"
                 placeholder="Password"
             />
             <div className="py-2" />
-            <Password.CheckList />
-        </Password>
+            <PasswordInput.CheckList />
+        </PasswordInput>
     ),
 };
 
 /**
- * Password Input ( LEAST_ONE_SPECIAL_CHAR_REQUIRED )
+ * PasswordInput Input ( LEAST_ONE_SPECIAL_CHAR_REQUIRED )
  * at least 1 special char like !@#$, would be pass
  */
 export const SpecialCharPass: Story = {
     render: (args) => (
-        <Password {...args} passwordInitValue="!@#$">
-            <Password.Input
+        <PasswordInput {...args} passwordInitValue="!@#$">
+            <PasswordInput.Input
                 id="aha-password-input-special-char"
                 label="Password"
                 placeholder="Password"
             />
             <div className="py-2" />
-            <Password.CheckList />
-        </Password>
+            <PasswordInput.CheckList />
+        </PasswordInput>
     ),
 };
 
 /**
- * Password Input ( MinLengthPass )
+ * PasswordInput Input ( MinLengthPass )
  * at least > 8 char, would be pass
  */
 export const MinLengthPass: Story = {
     render: (args) => (
-        <Password {...args} passwordInitValue="//////////">
-            <Password.Input
+        <PasswordInput {...args} passwordInitValue="//////////">
+            <PasswordInput.Input
                 id="aha-password-input-min-length"
                 label="Password"
                 placeholder="Password"
             />
             <div className="py-2" />
-            <Password.CheckList />
-        </Password>
+            <PasswordInput.CheckList />
+        </PasswordInput>
     ),
 };
 
 /**
- * Password Input ( AllPass )
+ * PasswordInput Input ( AllPass )
  * satisfy all rules, would be pass
  */
 export const AllPass: Story = {
     render: (args) => (
-        <Password {...args} passwordInitValue="@HelloWorld0123">
-            <Password.Input
+        <PasswordInput {...args} passwordInitValue="@HelloWorld0123">
+            <PasswordInput.Input
                 id="aha-password-input-all-pass"
                 label="Password"
                 placeholder="Password"
             />
             <div className="py-2" />
-            <Password.CheckList />
-        </Password>
+            <PasswordInput.CheckList />
+        </PasswordInput>
     ),
 };

@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { useRef } from 'react';
-import PasswordInput from '@/components/PasswordInput';
-import Password from '@/components/PasswordInput';
 import DatePicker from '@/components/DatePicker';
-import CheckItem from '@/components/CheckItem';
+import PasswordInput from '@/components/PasswordInput';
 
 export default function Home() {
     const [date, setDate] = React.useState<string>('');
@@ -11,13 +9,13 @@ export default function Home() {
     return (
         <div id="root" className="p-8">
             <PasswordInput>
-                <Password.Input
+                <PasswordInput.Input
                     id="aha-password-input-default"
                     label="Password"
                     placeholder="Password"
                 />
                 <div className="py-2" />
-                <Password.CheckList />
+                <PasswordInput.CheckList />
             </PasswordInput>
             <div className="py-4" />
             <DatePicker
