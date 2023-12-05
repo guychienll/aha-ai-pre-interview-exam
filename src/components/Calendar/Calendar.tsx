@@ -5,7 +5,12 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Paginator from '@/components/Paginator';
 import { CALENDAR_MODE } from '@/constants/date';
-import { DateRange, DefaultDateRange, isDateOutOfRange } from '@/utils/date';
+import {
+    DateRange,
+    DefaultDateRange,
+    handleNextStep,
+    isDateOutOfRange,
+} from '@/utils/date';
 import DateTable from '@/components/DateTable';
 import YearTable from '@/components/YearTable';
 import Header from '@/components/Calendar/Header';
@@ -139,35 +144,21 @@ export default React.forwardRef<HTMLDivElement, CalendarProps>(
             setSelectedDate(date);
         };
 
-        const handleChangeBatchDates = (amount: dayjs.Dayjs) => () => {
-            handleSelectDate(amount.toDate());
-        };
-
         const handleSelectYear = (year: number) => {
             const diff = year - dayjs(selectedDate).year();
             handleSelectDate(dayjs(selectedDate).add(diff, 'year').toDate());
         };
 
-        const prevMonthPage = dayjs(selectedDate).add(-1, 'month');
-        const nextMonthPage = dayjs(selectedDate).add(1, 'month');
-        const prevYearPage = dayjs(selectedDate).add(-20, 'year');
-        const nextYearPage = dayjs(selectedDate).add(20, 'year');
-        const handlePrevPage =
-            mode === CALENDAR_MODE.DATE
-                ? handleChangeBatchDates(prevMonthPage)
-                : handleChangeBatchDates(prevYearPage);
-        const handleNextPage =
-            mode === CALENDAR_MODE.DATE
-                ? handleChangeBatchDates(nextMonthPage)
-                : handleChangeBatchDates(nextYearPage);
-        const isPrevDisabled =
-            mode === CALENDAR_MODE.DATE
-                ? isDateOutOfRange(prevMonthPage.toDate(), range)
-                : isDateOutOfRange(prevYearPage.toDate(), range);
-        const isNextDisabled =
-            mode === CALENDAR_MODE.DATE
-                ? isDateOutOfRange(nextMonthPage.toDate(), range)
-                : isDateOutOfRange(nextYearPage.toDate(), range);
+        const getNextStepResult = (nextManipulation: {
+            value: number;
+            unit: 'day' | 'month' | 'year';
+        }) => {
+            return handleNextStep({
+                origin: selectedDate,
+                nextManipulation,
+                range,
+            });
+        };
 
         return (
             <div ref={ref} className={clsx([styles.wrapper, className])}>
@@ -180,48 +171,103 @@ export default React.forwardRef<HTMLDivElement, CalendarProps>(
                     }}
                 />
 
-                <Paginator
-                    isPrevDisabled={isPrevDisabled}
-                    isNextDisabled={isNextDisabled}
-                    handleNextPage={handleNextPage}
-                    handlePrevPage={handlePrevPage}
-                    content={
-                        mode === CALENDAR_MODE.DATE ? (
-                            <button
-                                className={clsx([styles.month])}
-                                onClick={() => {
-                                    setMode(CALENDAR_MODE.YEAR);
-                                }}
-                            >
-                                {dateElems[1]}, {dateElems[3]}
-                            </button>
-                        ) : (
-                            <button
-                                className={clsx([styles.month])}
-                                onClick={() => {
-                                    setMode(CALENDAR_MODE.DATE);
-                                }}
-                            >
-                                {dateElems[3]}
-                            </button>
-                        )
-                    }
-                />
-
                 {mode === CALENDAR_MODE.DATE ? (
-                    <DateTable
-                        dates={dates}
-                        selectedDate={selectedDate}
-                        handleSelectDate={handleSelectDate}
-                        range={range}
-                    />
+                    <>
+                        <Paginator
+                            isNextDisabled={dayjs(
+                                getNextStepResult({
+                                    value: 1,
+                                    unit: 'month',
+                                })
+                            ).isSame(selectedDate)}
+                            isPrevDisabled={dayjs(
+                                getNextStepResult({
+                                    value: -1,
+                                    unit: 'month',
+                                })
+                            ).isSame(selectedDate)}
+                            handleNextPage={() => {
+                                const date = getNextStepResult({
+                                    value: 1,
+                                    unit: 'month',
+                                });
+                                handleSelectDate(date);
+                            }}
+                            handlePrevPage={() => {
+                                const date = getNextStepResult({
+                                    value: -1,
+                                    unit: 'month',
+                                });
+
+                                handleSelectDate(date);
+                            }}
+                            content={
+                                <button
+                                    className={clsx([styles.month])}
+                                    onClick={() => {
+                                        setMode(CALENDAR_MODE.YEAR);
+                                    }}
+                                >
+                                    {dateElems[1]}, {dateElems[3]}
+                                </button>
+                            }
+                        />
+
+                        <DateTable
+                            dates={dates}
+                            selectedDate={selectedDate}
+                            handleSelectDate={handleSelectDate}
+                            range={range}
+                        />
+                    </>
                 ) : (
-                    <YearTable
-                        years={years}
-                        selectedDate={selectedDate}
-                        handleSelectYear={handleSelectYear}
-                        range={range}
-                    />
+                    <>
+                        <Paginator
+                            isNextDisabled={dayjs(
+                                getNextStepResult({
+                                    value: 20,
+                                    unit: 'year',
+                                })
+                            ).isSame(selectedDate)}
+                            isPrevDisabled={dayjs(
+                                getNextStepResult({
+                                    value: -20,
+                                    unit: 'year',
+                                })
+                            ).isSame(selectedDate)}
+                            handleNextPage={() => {
+                                const date = getNextStepResult({
+                                    value: 20,
+                                    unit: 'year',
+                                });
+                                handleSelectDate(date);
+                            }}
+                            handlePrevPage={() => {
+                                const date = getNextStepResult({
+                                    value: -20,
+                                    unit: 'year',
+                                });
+                                handleSelectDate(date);
+                            }}
+                            content={
+                                <button
+                                    className={clsx([styles.month])}
+                                    onClick={() => {
+                                        setMode(CALENDAR_MODE.DATE);
+                                    }}
+                                >
+                                    {dateElems[3]}
+                                </button>
+                            }
+                        />
+
+                        <YearTable
+                            years={years}
+                            selectedDate={selectedDate}
+                            handleSelectYear={handleSelectYear}
+                            range={range}
+                        />
+                    </>
                 )}
 
                 {renderActions && renderActions(selectedDate)}

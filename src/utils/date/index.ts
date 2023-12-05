@@ -14,3 +14,35 @@ export const isDateOutOfRange = (date: Date, range?: DateRange) => {
 
     return target.isAfter(max) || target.isBefore(min);
 };
+
+type HandleNextStep = (params: {
+    origin: Date;
+    nextManipulation: {
+        value: number;
+        unit: 'day' | 'month' | 'year';
+    };
+    range: DateRange;
+}) => Date;
+
+export const handleNextStep: HandleNextStep = (params) => {
+    const { origin, nextManipulation, range } = params;
+
+    if (nextManipulation.value === 0) {
+        throw new Error('nextManipulation.value should not be 0');
+    }
+
+    let _nextDate = dayjs(origin)
+        .add(nextManipulation.value, nextManipulation.unit)
+        .toDate();
+
+    const isPrev = nextManipulation.value < 0;
+
+    if (isDateOutOfRange(_nextDate, range)) {
+        if (isPrev) {
+            return dayjs(range.minDate).add(1, 'day').toDate();
+        } else {
+            return dayjs(range.maxDate).toDate();
+        }
+    }
+    return _nextDate;
+};

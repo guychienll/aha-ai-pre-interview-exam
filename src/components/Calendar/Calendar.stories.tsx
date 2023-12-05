@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { CALENDAR_MODE } from '@/constants/date';
 import { DefaultDateRange } from '@/utils/date';
 import ButtonGroup from '@/components/ButtonGroup';
+import styles from '@/components/DatePicker/DatePicker.module.scss';
 
 const meta: Meta<typeof Calendar> = {
     title: 'components/Calendar',
@@ -97,7 +98,7 @@ export const WithActions: Story = {
                 calendarMode={CALENDAR_MODE.DATE}
                 renderActions={() => {
                     return (
-                        <ButtonGroup>
+                        <ButtonGroup className={styles.buttonGroup}>
                             <ButtonGroup.Button
                                 handleClick={() => {
                                     console.log('dismiss');
